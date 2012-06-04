@@ -57,6 +57,11 @@
             <%= street_address1 %><br />
             <%= city %>, <%= state %> <%= zip %>
         </div>
+        <% if (plans.length > 0) { %>
+        <ul>
+        <% _.each(plans, function(plan) { %><li><%= plan.name %></li><% }); %>
+        </ul>
+        <% } %>
     </script>
 
     <!-- scripts concatenated and minified via build script -->

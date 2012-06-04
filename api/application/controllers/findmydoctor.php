@@ -25,7 +25,23 @@ class FindMyDoctor extends CI_Controller {
 		$query = $this->input->get_post('query');
 
 		$this->load->model('doctor');
+
+		// first let's get all of the doctors based on the query
 		$doctors = $this->doctor->search($query);
+
+		/*
+		 * if we have doctors, loop through each doctor and grab all of
+		 * the plans that the doctor is associated with. if the doctor is
+		 * not associated with any plans, the plans object will be an
+		 * empty array
+		 */
+		if (count($doctors) > 0) {
+			foreach ($doctors as $doctor) {
+				$plans = $this->doctor->getDoctorsPlans($doctor->id);
+
+				$doctor->plans = $plans;
+			}
+		}
 
 		echo json_encode($doctors);
 	}
